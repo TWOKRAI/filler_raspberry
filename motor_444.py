@@ -111,7 +111,9 @@ class Motor_monitor:
         if detect:
             tasks.append(asyncio.create_task(self._detect_sensor()))
 
-        tasks.append(asyncio.create_task(self.motor.move(distance, async_mode=True)))
+        #tasks.append(asyncio.create_task(self.motor.move(distance, async_mode=True)))
+
+        tasks.append(asyncio.create_task(self.motor._freq_async(2000, 0.01, distance)))
             
         try:
             await asyncio.gather(*tasks)

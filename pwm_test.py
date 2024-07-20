@@ -16,15 +16,18 @@ def run_motor_with_axeleration_hz_in_sqr_sec(target_frequency, axeleration):
         print(f)
 
 
+for i in range(1000):
+    motor.frequency = 3000
+    motor.value = 0.5
+    sleep(0.01)
 
 
+# try:
+#     #run_motor_with_axeleration_hz_in_sqr_sec(3000, 1000)
 
-try:
-    run_motor_with_axeleration_hz_in_sqr_sec(3000, 1000)
-
-            # while True:
-            #     motor.value = 0.5 # duty cycle, how much time of the period state is high (0-100%)
-    pass
-except KeyboardInterrupt:
-    motor.value = 0
-    pass
+#             # while True:
+#             #     motor.value = 0.5 # duty cycle, how much time of the period state is high (0-100%)
+#     pass
+# except KeyboardInterrupt:
+#     motor.value = 0
+#     pass

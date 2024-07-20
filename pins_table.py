@@ -201,6 +201,7 @@
 
 
 import gpiod
+import gpiozero as gz
 
 
 class Pins():
@@ -209,9 +210,10 @@ class Pins():
 
         self.release_all_lines()
     
-        self.motor_step = self.pin_init(26)
+        self.motor_step = gz.PWMOutputDevice(13)
+
         self.motor_dir = self.pin_init(19)
-        self.motor_enable = self.pin_init(13)
+        self.motor_enable = self.pin_init(26)
 
         self.button_stop = self.pin_init(14)
         self.button = self.pin_init(5)

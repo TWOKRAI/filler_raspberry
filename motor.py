@@ -1,6 +1,7 @@
 import asyncio
+from math import sqrt
 
-from pins_table import pins
+
 
 from wrapper import _timing, _log_input_output
 
@@ -168,6 +169,35 @@ class Motor:
 
 
 		self.stop_for = False
+	
+	
+	async def _freq_async(self, frequency, k, distance):
+		if distance >= 0:
+			self.pin_direction.set_value(self.direction)
+		else:
+			self.pin_direction.set_value(not self.direction)
+
+		while True:
+			if self.stop == True:
+				break
+
+			for f in range(frequency):
+				self.pin_step.frequency = f
+				self.pin_step.value = 0.5
+			
+				await asyncio.sleep(k)
+					
+		for f in range(frequency, -1, -1):
+			self.pin_step.frequency = f
+			self.pin_step.value = 0.5
+			
+			await asyncio.sleep(k)
+				
+		self.stop_for = False
+		
+
+	def freq(self, frequency, k):
+		asyncio.run(self._freq_async(self, frequency, k))
 
 
 	@_log_input_output(False)
