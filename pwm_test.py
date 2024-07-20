@@ -16,10 +16,11 @@ def run_motor_with_axeleration_hz_in_sqr_sec(target_frequency, axeleration):
         print(f)
 
 
-for i in range(1000):
+for i in range(200):
     motor.frequency = 3000
     motor.value = 0.5
     sleep(0.01)
+
 
 
 # try:
