@@ -36,7 +36,7 @@ class Camera:
 
         image = np.zeros((self.width_out, self.height_out, 3), dtype=np.uint8)
         
-        point_pixel = [(5, 564), (255, 333), (630, 550), (390, 334)]
+        point_pixel = [(30, 428), (210, 197), (625, 423), (418, 197)]
         point_real = [(-20, 11.2), (-20, 50.7), (20, 11.2), (20, 50.7)]
         
         self.perspective = Perspective(image, point_pixel, point_real)
