@@ -83,7 +83,7 @@ def _timing(print_log):
 				end_time = time.time()
 				elapsed_time = end_time - start_time
 				print(f'Running time {func.__name__}:', round(elapsed_time, 4), 'second')
-			
+
 			return result
 		return wrapper
 	return decorator 

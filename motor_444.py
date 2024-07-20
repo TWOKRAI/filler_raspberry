@@ -6,6 +6,7 @@ from pins_table import pins
 
 from graphic import Plotter
 
+from wrapper import _timing, _log_input_output
 
 class Motor_monitor:
     def __init__(self):
@@ -28,16 +29,16 @@ class Motor_monitor:
         
         self.motor.limit_min = -19100
         self.motor.limit_max = 19100
-        self.distance = 19000
+        self.distance = 20000
 
         self.direction = True
 
         self.state = False
         self.not_button = False
 
-        self.motor.enable_on(True)
+        self.motor.enable_on
 
-
+    
     def run(self):
         button = pins.button.get_value()
         switch_out = pins.switch_out.get_value()
@@ -104,7 +105,7 @@ class Motor_monitor:
 
             await asyncio.sleep(0.05)
 
-
+    
     async def _move_async(self, distance, detect = False):
         tasks = []
 
@@ -113,7 +114,7 @@ class Motor_monitor:
 
         #tasks.append(asyncio.create_task(self.motor.move(distance, async_mode=True)))
 
-        tasks.append(asyncio.create_task(self.motor._freq_async(3000, 5, distance)))
+        tasks.append(asyncio.create_task(self.motor._freq_async(2000, 5, distance)))
             
         try:
             await asyncio.gather(*tasks)
@@ -124,11 +125,12 @@ class Motor_monitor:
                 
         print('ready')
         self.motor.ready = False
+        
 
 
 motor_monitor = Motor_monitor()
 
 
 while True:
-    motor_monitor.run()
+    motor_monitor.r
     

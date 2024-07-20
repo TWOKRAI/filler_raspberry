@@ -170,8 +170,11 @@ class Motor:
 
 		self.stop_for = False
 	
-	
+
+	@_timing(True)
 	async def _freq_async(self, frequency, sec, distance):
+		self.ready = False
+
 		if distance >= 0:
 			self.pin_direction.set_value(self.direction)
 		else:
@@ -180,20 +183,21 @@ class Motor:
 		acc = False
 
 		time_distance = 0
+		k = 0.01
 
 		while True:
 			if self.stop == True:
 				break
 
 			if acc == False:
-				step = frequency * 1 / sec * 0.01 
+				step = frequency * 1 / sec * k
 
 				if step < 1: 
 					step = 1
 
 				print(step)
 
-				stop_distance = abs(distance) / 1000
+				stop_distance = abs(distance) / 1000 * 0.95
 
 				for f in range(1, frequency, int(step)):
 					if self.stop == True:
@@ -205,8 +209,8 @@ class Motor:
 					self.pin_step.value = 0.5
 					print(f)
 
-					time_distance += 0.01
-					await asyncio.sleep(0.01)
+					time_distance += k
+					await asyncio.sleep(k)
 
 					if time_distance >= sec:
 						break
@@ -214,9 +218,9 @@ class Motor:
 				
 				acc = True
 
-			time_distance += 0.01
+			time_distance += k
 			print(time_distance)
-			await asyncio.sleep(0.01)
+			await asyncio.sleep(k)
 						
 			if time_distance >= stop_distance - sec:
 				break
@@ -226,13 +230,14 @@ class Motor:
 			self.pin_step.frequency = f
 			self.pin_step.value = 0.5
 			
-			time_distance += 0.01
+			time_distance += k
 			print(time_distance)
-			await asyncio.sleep(0.01)
+			await asyncio.sleep(k)
 
 			if time_distance >= stop_distance:	
 				break
 				
+		self.ready = True
 
 		self.stop_for = False
 		self.pin_step.value = 0
